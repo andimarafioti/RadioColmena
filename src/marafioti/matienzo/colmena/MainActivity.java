@@ -201,6 +201,7 @@ public class MainActivity extends ActionBarActivity {
 	public void togglepp(View v) {
 				
 		if (!playPause) {
+			playPause = true;
 			colmena = new MediaPlayer();
 			colmena.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			wakeLock.acquire();
@@ -211,7 +212,6 @@ public class MainActivity extends ActionBarActivity {
 				if (!colmena.isPlaying())
 					colmena.start();
 			}
-			playPause = true;
 		} else {
 			colmena.pause();
 			colmena.reset();
@@ -289,6 +289,9 @@ public class MainActivity extends ActionBarActivity {
 		protected void onPostExecute(Boolean result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
+			if (errorHandling != "OK"){
+				Toast.makeText(MainActivity.this, errorHandling, Toast.LENGTH_LONG).show();
+			}
 			if (progress.isShowing()) {
 				progress.cancel();
 			}
