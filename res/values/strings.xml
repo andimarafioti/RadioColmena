@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Colmena</string>
+    <string name="button">toggle play/pause</string>
+    <string name="action_settings">Settings</string>
+    <string name="btnFB">Facebook</string>
+    <string name="btnTW">Twitter</string>
+    <string name="btnWeb">Colmena</string>
+    <string name="hoysuena">Los programas de hoy!</string>
+    <string name="ahorasuena">El programa que está sonando!</string>
+   
+    
+    <style name="ButtonText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">right</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+</resources>
