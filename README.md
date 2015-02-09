@@ -8,10 +8,18 @@ Desireded Functionalities for initial release
 - Link to social media
 - Show what's on today.
 
-Stream radio current issues
+Current issues for the streaming of the radio
 --------------
 
-- Unable to distinguish why the stream fails. There is usually two option: 1. The user is not properly conected to the internet, 2. The stream is offline (sometimes altogether, others just the stream for android).
+- Unable to distinguish why the stream fails, when it fails. There is two known option: 1. The user is not properly conected to the internet, 2. The stream is offline (sometimes altogether, others just the stream for android).
+
+Current issues for the design of the app
+--------------
+
+- There's no handling for bigger screens (looks weird on tablets)
+- There's no background. Looks neat but empty.
+- Too much space! Need fillings to get feelings.
+
 
 Desireded Functionalities for future releases
 --------------
