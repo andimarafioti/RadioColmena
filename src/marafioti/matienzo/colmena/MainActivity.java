@@ -18,6 +18,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,11 +38,12 @@ public class MainActivity extends ActionBarActivity {
 	 * help to toggle between play and pause.
 	 */
 	private boolean playPause = false;
-	String url = "rtsp://celulares.arghosted.com:1935/live/7320.stream"; // stream 
+	String url = "rtsp://celulares.arghosted.com:1935/live/7320.stream"; // stream
 	MediaPlayer colmena;
 	WakeLock wakeLock;
 	WifiLock wifiLock;
 	Boolean prepared;
+	Button btnPlay;
 
 	/**
 	 * remain false till media is not completed, inside OnCompletionListener
@@ -55,15 +57,14 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		// activity:
-		
-		//Do not let the phone go to sleep (kills stream)
+
+		// Do not let the phone go to sleep (kills stream)
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
 				"myWakeLock");
 		// Do not let the device shut off wifi.
 		wifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
-			    .createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock"); 
-
+				.createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
 
 		// initialize title
 		Wv = (WebView) findViewById(R.id.webViewTitle);
@@ -72,25 +73,20 @@ public class MainActivity extends ActionBarActivity {
 		Wv.setInitialScale(getScaleW(widthLogo));
 		Wv.loadUrl(logo);
 
-		// initialize lower group ('hoy suena + social buttons'):
-		// metrics for hoy suena layout:
-		LinearLayout linearlayout = (LinearLayout) findViewById(R.id.hoysuenafield);
-		linearlayout.setLayoutParams(new LayoutParams((int) (getResources()
-				.getDisplayMetrics().widthPixels * 0.65), (int) (getResources()
-				.getDisplayMetrics().heightPixels * 0.38)));
-		// metrics for hoy suena image:
-		int widthHS = 114; // de la imagen
-		int heightHS = 34;
-		int widthHSfield = (int) ((float) (getScaleW(widthHS) * (float) 0.5));
-		int heightHSfield = (int) ((widthHSfield * heightHS) / (float) widthHS);
+		// initialize lower group ('buttons'):
+		// metrics for buttons layout:
+		Log.d("buttons", "going to buttons");
+		LinearLayout buttons = (LinearLayout) findViewById(R.id.buttons);
 
-		ImageView hoysuena = (ImageView) findViewById(R.id.hoysuenaimg);
-		hoysuena.setImageResource(R.drawable.hoysuena);
-		hoysuena.getLayoutParams().width = widthHSfield;
-		hoysuena.getLayoutParams().height = heightHSfield;
+		RelativeLayout.LayoutParams buttonsParams = new RelativeLayout.LayoutParams(
+				(int) (getResources().getDisplayMetrics().widthPixels),
+				(int) (getResources().getDisplayMetrics().heightPixels * 0.38));
+		buttonsParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		buttons.setLayoutParams(buttonsParams);
 
 		// metrics for social buttons
-		LinearLayout buttonsLayout = (LinearLayout) findViewById(R.id.buttons);
+		Log.d("s buttons", "going to s buttons");
+		LinearLayout buttonsLayout = (LinearLayout) findViewById(R.id.socialbuttons);
 		buttonsLayout.setLayoutParams(new LayoutParams((int) (getResources()
 				.getDisplayMetrics().widthPixels * 0.3), (int) (getResources()
 				.getDisplayMetrics().heightPixels * 0.38)));
@@ -114,45 +110,55 @@ public class MainActivity extends ActionBarActivity {
 		btnWeb.getLayoutParams().width = (int) (getResources()
 				.getDisplayMetrics().widthPixels * 0.25);
 
-		// initialize middle group ('ahora suena' + mediaplayer buttons):
-
-		LinearLayout ahoraSuenaField = (LinearLayout) findViewById(R.id.ahorasuena);
-		ahoraSuenaField.setPadding(0, 32, 0, 32);
-		RelativeLayout.LayoutParams ahorasuenaParams = new RelativeLayout.LayoutParams(
-				(int) (getResources().getDisplayMetrics().widthPixels),
-				(int) (getResources().getDisplayMetrics().heightPixels * 0.38));
-		ahorasuenaParams.addRule(RelativeLayout.ABOVE,R.id.hoysuena);
-//		ahorasuenaParams.addRule(RelativeLayout.BELOW,R.id.webViewTitle);
-		ahoraSuenaField.setLayoutParams(ahorasuenaParams);
-
 		// metrics for playpause button btnPlay = (Button)
-		Button btnPlay = (Button) findViewById(R.id.buttonplay);
+		btnPlay = (Button) findViewById(R.id.buttonplay);
 		btnPlay.setBackgroundResource(R.drawable.button_play);
 		btnPlay.getLayoutParams().height = (int) (getResources()
-				.getDisplayMetrics().widthPixels * 0.25);
+				.getDisplayMetrics().widthPixels * 0.55);
 		btnPlay.getLayoutParams().width = (int) (getResources()
-				.getDisplayMetrics().widthPixels * 0.25);
-
-		Button btnPause = (Button) findViewById(R.id.buttonpause);
-		btnPause.setBackgroundResource(R.drawable.button_pause);
-		btnPause.getLayoutParams().height = (int) (getResources()
-				.getDisplayMetrics().widthPixels * 0.25);
-		btnPause.getLayoutParams().width = (int) (getResources()
-				.getDisplayMetrics().widthPixels * 0.25);
+				.getDisplayMetrics().widthPixels * 0.55);
 		
+
+		// initialize middle group ('hoy suena'):
+		Log.d("hoysuena", "going to hoysuena");
+		LinearLayout hoySuenaField = (LinearLayout) findViewById(R.id.hoysuena);
+		hoySuenaField.setPadding(0, 32, 0, 32);
+		RelativeLayout.LayoutParams hoySuenaParams = new RelativeLayout.LayoutParams(
+				(int) (getResources().getDisplayMetrics().widthPixels),
+				(int) (getResources().getDisplayMetrics().heightPixels * 0.38));
+
+		hoySuenaParams.addRule(RelativeLayout.ABOVE, R.id.buttons);
+		// ahorasuenaParams.addRule(RelativeLayout.BELOW,R.id.webViewTitle);
+		hoySuenaField.setLayoutParams(hoySuenaParams);
+
+		Log.d("hoysuenaIm", "going to hoysuena Im");
+
+		// metrics for hoy suena image:
+		int widthHS = 114; // de la imagen
+		int heightHS = 34;
+		int widthHSfield = (int) ((float) (getScaleW(widthHS) * (float) 0.5));
+		int heightHSfield = (int) ((widthHSfield * heightHS) / (float) widthHS);
+
+		ImageView hoysuena = (ImageView) findViewById(R.id.hoysuenaimg);
+		hoysuena.setImageResource(R.drawable.hoysuena);
+		hoysuena.getLayoutParams().width = widthHSfield;
+		hoysuena.getLayoutParams().height = heightHSfield;
+
 		// metrics for ahora suena image
-
-		int widthAS = 114; // de la imagen
-		int heightAS = 24;
-
-		int widthASfield = (int) ((float) (getScaleW(widthAS) * (float) 0.5));
-		int heightASfield = (int) ((widthASfield * heightAS) / (float) widthAS);
-
-		ImageView ahorasuena = (ImageView) findViewById(R.id.ahorasuenaimg);
-		ahorasuena.setImageResource(R.drawable.ahora);
-		ahorasuena.getLayoutParams().width = widthASfield;
-		ahorasuena.getLayoutParams().height = heightASfield;
-		
+		/*
+		 * Will be added on a future release int widthAS = 114; // de la imagen
+		 * int heightAS = 24;
+		 * 
+		 * int widthASfield = (int) ((float) (getScaleW(widthAS) * (float)
+		 * 0.5)); int heightASfield = (int) ((widthASfield * heightAS) / (float)
+		 * widthAS);
+		 * 
+		 * ImageView ahorasuena = (ImageView) findViewById(R.id.ahorasuenaimg);
+		 * ahorasuena.setImageResource(R.drawable.ahora);
+		 * ahorasuena.getLayoutParams().width = widthASfield;
+		 * ahorasuena.getLayoutParams().height = heightASfield; Will be added on
+		 * a future release
+		 */
 		Log.e("creating", "created");
 	}
 
@@ -199,31 +205,33 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	public void togglepp(View v) {
-				
+
 		if (!playPause) {
 			playPause = true;
 			colmena = new MediaPlayer();
 			colmena.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			wakeLock.acquire();
-			wifiLock.acquire(); 
+			wifiLock.acquire();
 			if (initialStage) {
 				new Player().execute(url);
 			} else {
 				if (!colmena.isPlaying())
 					colmena.start();
 			}
+			btnPlay.setBackgroundResource(R.drawable.button_pause);
 		} else {
 			colmena.pause();
 			colmena.reset();
 			colmena.release();
 			initialStage = true;
 			playPause = false;
-			if (wifiLock.isHeld()){
-			wifiLock.release(); 
+			if (wifiLock.isHeld()) {
+				wifiLock.release();
 			}
 			if (wakeLock.isHeld()) {
 				wakeLock.release();
 			}
+			btnPlay.setBackgroundResource(R.drawable.button_play);
 		}
 	};
 
@@ -238,7 +246,7 @@ public class MainActivity extends ActionBarActivity {
 	class Player extends AsyncTask<String, Void, Boolean> {
 		private ProgressDialog progress;
 		String errorHandling = "OK";
-		
+
 		@Override
 		protected Boolean doInBackground(String... params) {
 			// TODO Auto-generated method stub
@@ -273,9 +281,6 @@ public class MainActivity extends ActionBarActivity {
 			return prepared;
 		}
 
-
-
-		
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
@@ -284,13 +289,14 @@ public class MainActivity extends ActionBarActivity {
 			this.progress.setCancelable(false);
 			this.progress.show();
 		}
-		
+
 		@Override
 		protected void onPostExecute(Boolean result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if (errorHandling != "OK"){
-				Toast.makeText(MainActivity.this, errorHandling, Toast.LENGTH_LONG).show();
+			if (errorHandling != "OK") {
+				Toast.makeText(MainActivity.this, errorHandling,
+						Toast.LENGTH_LONG).show();
 			}
 			if (progress.isShowing()) {
 				progress.cancel();
