@@ -237,7 +237,8 @@ public class MainActivity extends ActionBarActivity {
 
 	class Player extends AsyncTask<String, Void, Boolean> {
 		private ProgressDialog progress;
-
+		String errorHandling = "OK";
+		
 		@Override
 		protected Boolean doInBackground(String... params) {
 			// TODO Auto-generated method stub
@@ -246,27 +247,35 @@ public class MainActivity extends ActionBarActivity {
 				colmena.setDataSource(params[0]);
 				colmena.prepare();
 				prepared = true;
+				errorHandling = "OK";
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				Log.d("IllegarArgument", e.getMessage());
 				prepared = false;
 				e.printStackTrace();
+				errorHandling = "Illegal Argument";
 			} catch (SecurityException e) {
 				// TODO Auto-generated catch block
 				prepared = false;
 				e.printStackTrace();
+				errorHandling = "Security Exception";
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				prepared = false;
 				e.printStackTrace();
+				errorHandling = "Illegal State";
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				prepared = false;
 				e.printStackTrace();
+				errorHandling = "IO exception";
 			}
 			return prepared;
 		}
 
+
+
+		
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
