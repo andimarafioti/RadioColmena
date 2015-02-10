@@ -118,6 +118,7 @@ public class MainActivity extends ActionBarActivity {
 		btnPlay.getLayoutParams().width = (int) (getResources()
 				.getDisplayMetrics().widthPixels * 0.55);
 		
+		
 
 		// initialize middle group ('hoy suena'):
 		Log.d("hoysuena", "going to hoysuena");
@@ -160,6 +161,24 @@ public class MainActivity extends ActionBarActivity {
 		 * a future release
 		 */
 		Log.e("creating", "created");
+		
+		try{
+			btnPlay.performClick();
+		} catch (Exception e) {
+			colmena.pause();
+			colmena.reset();
+			colmena.release();
+			initialStage = true;
+			playPause = false;
+			if (wifiLock.isHeld()) {
+				wifiLock.release();
+			}
+			if (wakeLock.isHeld()) {
+				wakeLock.release();
+			}
+			btnPlay.setBackgroundResource(R.drawable.button_play);
+		}
+		
 	}
 
 	@Override
