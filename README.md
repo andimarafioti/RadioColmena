@@ -12,6 +12,7 @@ Current issues for the streaming of the radio
 --------------
 
 - Unable to distinguish why the stream fails, when it fails. There is two known option: 1. The user is not properly conected to the internet, 2. The stream is offline (sometimes altogether, others just the stream for android).
+- It would be nice to add an 'online' alert so the user can know if the streaming will work. I thought of running a pre-stream when the app first opens but this takes too much time.
 
 Current issues for the design of the app
 --------------
