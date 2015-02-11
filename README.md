@@ -4,7 +4,8 @@
 Desireded Functionalities for initial release
 ==============
 
-- Stream radio
+- Stream the radio
+- Show a notification while the user is streaming
 - Link to social media
 - Show what's on today.
 
@@ -20,6 +21,7 @@ Current issues for the design of the app
 - There's no handling for bigger screens (looks weird on tablets)
 - There's no background. Looks neat but empty.
 - Too much space! Need fillings to get feelings.
+- 'hoy suena' field does not retrieve the information from the web.
 
 
 Desireded Functionalities for future releases
