@@ -5,6 +5,7 @@ import java.io.IOException;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
@@ -113,11 +115,23 @@ public class MainActivity extends ActionBarActivity {
 		// metrics for playpause button btnPlay = (Button)
 		btnPlay = (Button) findViewById(R.id.buttonplay);
 		btnPlay.setBackgroundResource(R.drawable.button_play);
-		btnPlay.getLayoutParams().height = (int) (getResources()
+		/*btnPlay.getLayoutParams().height = (int) (getResources()
 				.getDisplayMetrics().widthPixels * 0.55);
 		btnPlay.getLayoutParams().width = (int) (getResources()
 				.getDisplayMetrics().widthPixels * 0.55);
+		*/
+		LayoutParams btnPlayParams = new LayoutParams((int) (getResources()
+				.getDisplayMetrics().widthPixels * 0.55), (int) (getResources()
+				.getDisplayMetrics().widthPixels * 0.55));
+		btnPlayParams.leftMargin = (int) (getResources()
+				.getDisplayMetrics().widthPixels * 0.07);
+		int topMargin = (int) ((getResources().getDisplayMetrics().heightPixels * 0.38) - 
+				(getResources().getDisplayMetrics().widthPixels * 0.55));
+		if (topMargin > 0){
+			btnPlayParams.topMargin = topMargin/2;	
+		}
 		
+		btnPlay.setLayoutParams(btnPlayParams);
 		
 
 		// initialize middle group ('hoy suena'):
@@ -140,10 +154,16 @@ public class MainActivity extends ActionBarActivity {
 		int widthHSfield = (int) ((float) (getScaleW(widthHS) * (float) 0.5));
 		int heightHSfield = (int) ((widthHSfield * heightHS) / (float) widthHS);
 
-		ImageView hoysuena = (ImageView) findViewById(R.id.hoysuenaimg);
-		hoysuena.setImageResource(R.drawable.hoysuena);
-		hoysuena.getLayoutParams().width = widthHSfield;
-		hoysuena.getLayoutParams().height = heightHSfield;
+		ImageView hoysuenaimg = (ImageView) findViewById(R.id.hoysuenaimg);
+		hoysuenaimg.setImageResource(R.drawable.hoysuena);
+		hoysuenaimg.getLayoutParams().width = widthHSfield;
+		hoysuenaimg.getLayoutParams().height = heightHSfield;
+		
+		TextView hoysuenatxt = (TextView) findViewById(R.id.hoysuenatxt);
+		hoysuenatxt.setTextSize(24);
+		hoysuenatxt.setTypeface(Typeface.MONOSPACE);
+		String test = "\t\t17hs Vivo acá \n\t\t19hs El espacio vacío \n\t\t20hs Mochila\n\t\t22hs Mercurio\n\t\t23hs Alza Melaria";
+		hoysuenatxt.setText(test);
 
 		// metrics for ahora suena image
 		/*
@@ -162,6 +182,8 @@ public class MainActivity extends ActionBarActivity {
 		 */
 		Log.e("creating", "created");
 		
+		
+		/* I thought of testing the stream to see if it is online, but it takes too long
 		try{
 			btnPlay.performClick();
 		} catch (Exception e) {
@@ -178,7 +200,7 @@ public class MainActivity extends ActionBarActivity {
 			}
 			btnPlay.setBackgroundResource(R.drawable.button_play);
 		}
-		
+		*/
 	}
 
 	@Override

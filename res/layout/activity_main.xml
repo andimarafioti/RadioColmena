@@ -23,7 +23,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/webViewTitle"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/hoysuenaimg"
@@ -34,6 +34,12 @@
             android:paddingRight="12dp"
             android:scaleType="fitXY"
             android:src="@drawable/hoysuena" />
+
+        <TextView
+            android:id="@+id/hoysuenatxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,7 +93,6 @@
             style="@style/ButtonText"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_gravity="center|center_horizontal"
             android:onClick="togglepp" />
     </LinearLayout>
 
